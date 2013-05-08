@@ -25,11 +25,8 @@ import java.util.List;
  * 
  */
 public class ChartDataset {
-    /** The dataset title. */
     private String mTitle;
-    /** The dataset categories. */
     private List<String> mCategories = new ArrayList<String>();
-    /** The dataset values. */
     private List<Double> mValues = new ArrayList<Double>();
 
     /**

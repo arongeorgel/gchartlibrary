@@ -27,7 +27,7 @@ import android.graphics.Typeface;
  * @author Georgel Aron
  * 
  */
-public abstract class Renderer {
+public class Renderer {
     public static final int NO_COLOR = 0;
     public static final int BACKGROUND_COLOR = Color.BLACK;
     public static final int TEXT_COLOR = Color.LTGRAY;

@@ -1,6 +1,7 @@
 package com.gchartslibrary;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.RadialGradient;
@@ -10,12 +11,11 @@ import com.gchartslibrary.chart.Chart;
 import com.gchartslibrary.model.ChartDataset;
 import com.gchartslibrary.renderer.Renderer;
 
-public class PieChart extends Chart {
-
+public class DoughnutChart extends Chart {
     private int mCenterX;
     private int mCenterY;
 
-    public PieChart(ChartDataset dataset, Renderer renderer) {
+    public DoughnutChart(ChartDataset dataset, Renderer renderer) {
         super(dataset, renderer);
         mCenterX = 0;
         mCenterY = 0;
@@ -64,30 +64,41 @@ public class PieChart extends Chart {
 
         float shortRadius = radius * 0.9f;
         float longRadius = radius * 1.1f;
+        double decCoef = 0.2 / sLength;
 
-        RectF oval = new RectF(mCenterX - radius, mCenterY - radius, mCenterX + radius, mCenterY + radius);
-        for (int i = 0; i < sLength; i++) {
-            float value = (float) mDataset.getValue(i);
-            float angle = (float) (value / total * 360);
-            int color = mRenderer.getRenderers().get(i).getColor();
-            Paint paint3 = new Paint();
-            paint3.setStrokeWidth(1);
-            paint3.setStrokeCap(Paint.Cap.ROUND);
-            paint3.setStyle(Paint.Style.FILL);
+        for (int j = 0; j < sLength; j++) {
+            RectF oval = new RectF(mCenterX - radius, mCenterY - radius, mCenterX + radius, mCenterY + radius);
+            for (int i = 0; i < sLength; i++) {
+                float value = (float) mDataset.getValue(i);
+                float angle = (float) (value / total * 360);
+                int color = mRenderer.getRenderers().get(i).getColor();
+                Paint paint3 = new Paint();
+                paint3.setStrokeWidth(1);
+                paint3.setStrokeCap(Paint.Cap.ROUND);
+                paint3.setStyle(Paint.Style.FILL);
 
-            int[] colors = { color, colorToDarker(color, 0.95f) };
-            RadialGradient gradient3 = new RadialGradient(mCenterX, mCenterY, radius, colors, null, android.graphics.Shader.TileMode.CLAMP);
-            paint3.setShader(gradient3);
-            paint3.setAntiAlias(true);
+                int[] colors = { color, colorToDarker(color, 0.95f) };
+                RadialGradient gradient3 = new RadialGradient(mCenterX, mCenterY, radius, colors, null, android.graphics.Shader.TileMode.CLAMP);
+                paint3.setShader(gradient3);
+                paint3.setAntiAlias(true);
 
-            canvas.drawArc(oval, currentAngle, angle, true, paint3);
-            currentAngle += angle;
+                canvas.drawArc(oval, currentAngle, angle, true, paint3);
+                currentAngle += angle;
+            }
+
+            radius -= (int) mRadius * decCoef;
+            if (j == 4) {
+                paint.setColor(Color.WHITE);
+                paint.setStrokeCap(Paint.Cap.ROUND);
+                paint.setStyle(Style.FILL);
+                oval = new RectF(mCenterX - radius, mCenterY - radius, mCenterX + radius, mCenterY + radius);
+                canvas.drawArc(oval, 0, 360, true, paint);
+            }
         }
     }
 
     @Override
     public Renderer getRenderer() {
-        // TODO Auto-generated method stub
         return null;
     }
 

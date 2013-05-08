@@ -40,6 +40,13 @@ public abstract class Chart {
     protected ChartDataset mDataset;
     protected Renderer mRenderer;
 
+    protected int colorToDarker(int color, float value) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        hsv[2] *= value;
+        return Color.HSVToColor(hsv);
+    }
+
     /**
      * 
      * @param dataset

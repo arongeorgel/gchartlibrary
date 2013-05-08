@@ -17,7 +17,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RelativeLayout view = (RelativeLayout) findViewById(R.id.chart);
+        RelativeLayout viewPie = (RelativeLayout) findViewById(R.id.pie);
+        RelativeLayout viewDoughnut = (RelativeLayout) findViewById(R.id.doughnut);
 
         // Pie Chart Section Names
         String[] code = new String[] { "44.56%", "24.73%", "15.21%", "8.4%", "7.1%" };
@@ -45,9 +46,11 @@ public class MainActivity extends Activity {
             defaultRenderer.addSeriesRenderer(seriesRenderer);
         }
 
-        final ChartView chart = ChartBuilder.createPieChartView(getBaseContext(), distributionSeries, defaultRenderer);
+        final ChartView chartP = ChartBuilder.createPieChartView(getBaseContext(), distributionSeries, defaultRenderer);
+        final ChartView chartD = ChartBuilder.createDoughnutChartView(getBaseContext(), distributionSeries, defaultRenderer);
 
-        view.addView(chart);
+        viewPie.addView(chartP);
+        viewDoughnut.addView(chartD);
     }
 
 }

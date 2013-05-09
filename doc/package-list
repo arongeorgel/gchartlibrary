@@ -1,1 +1,5 @@
+com.gchartslibrary
+com.gchartslibrary.chart
+com.gchartslibrary.model
 com.gchartslibrary.renderer
+com.gchartslibrary.util

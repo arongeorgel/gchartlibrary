@@ -1,16 +1,22 @@
 package com.gchartslibrary;
 
+/**
+ * @author Georgel Aron
+ */
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 
 import com.gchartslibrary.chart.ChartBuilder;
 import com.gchartslibrary.model.ChartDataset;
+import com.gchartslibrary.model.DatasetSelection;
 import com.gchartslibrary.renderer.DatasetRenderer;
 import com.gchartslibrary.renderer.Renderer;
 
-public class MainActivity extends Activity {
+public class DemoPieActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +48,48 @@ public class MainActivity extends Activity {
             seriesRenderer = new DatasetRenderer();
             seriesRenderer.setColor(colors[i]);
             seriesRenderer.setDisplayChartValues(true);
-            // Adding a renderer for a slice
+            // seriesRenderer.setPopout(true);
             defaultRenderer.addSeriesRenderer(seriesRenderer);
         }
 
+        // defaultRenderer.setShowLabels(false);
+        defaultRenderer.setShowLegend(false);
+
         final ChartView chartP = ChartBuilder.createPieChartView(getBaseContext(), distributionSeries, defaultRenderer);
         final ChartView chartD = ChartBuilder.createDoughnutChartView(getBaseContext(), distributionSeries, defaultRenderer);
+
+        chartP.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                DatasetSelection seriesSelection = chartP.getCurrentSeriesAndPoint();
+                PieChart chart = (PieChart) chartP.getChart();
+                if (seriesSelection == null) {
+                    chart.removeDatasetRendererClicked();
+                    chartP.repaint();
+                } else {
+                    chart.setDatasetRendererClicked(seriesSelection.getPointIndex());
+                    chartP.repaint();
+                }
+
+            }
+        });
+
+        chartD.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                DatasetSelection seriesSelection = chartD.getCurrentSeriesAndPoint();
+                DoughnutChart chart = (DoughnutChart) chartD.getChart();
+                if (seriesSelection == null) {
+                    chart.removeDatasetRendererClicked();
+                    chartD.repaint();
+                } else {
+                    chart.setDatasetRendererClicked(seriesSelection.getPointIndex());
+                    chartD.repaint();
+                }
+            }
+        });
 
         viewPie.addView(chartP);
         viewDoughnut.addView(chartD);

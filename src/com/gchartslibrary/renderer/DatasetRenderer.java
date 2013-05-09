@@ -26,6 +26,7 @@ import android.graphics.Point;
  * 
  */
 public class DatasetRenderer {
+    private int mDataIndex;
     private int mColor;
     private boolean mDisplayChartValues;
     private int mDisplayChartValuesDistance;
@@ -40,6 +41,7 @@ public class DatasetRenderer {
     private Point mCenterPoint;
     private float mTextWidth;
     private float mTextHeight;
+    private boolean mPopout;
 
     public DatasetRenderer() {
         mColor = Color.GREEN;
@@ -52,6 +54,7 @@ public class DatasetRenderer {
         mInCenterBar = false;
         mClicked = false;
         mCenterPoint = new Point(0, 0);
+        mPopout = false;
     }
 
     public int getColor() {
@@ -240,5 +243,21 @@ public class DatasetRenderer {
                 + ", mChartValuesSpacing=" + mChartValuesSpacing + ", mStroke=" + mStroke + ", mChartValuesColor=" + mChartValuesColor
                 + ", mInTopBar=" + mInTopBar + ", mInCenterBar=" + mInCenterBar + ", mClicked=" + mClicked + ", mCenterPoint=" + mCenterPoint
                 + ", mTextWidth=" + mTextWidth + ", mTextHeight=" + mTextHeight + "]";
+    }
+
+    public int getDataIndex() {
+        return mDataIndex;
+    }
+
+    public void setDataIndex(int i) {
+        mDataIndex = i;
+    }
+
+    public boolean isPopout() {
+        return mPopout;
+    }
+
+    public void setPopout(boolean popout) {
+        mPopout = popout;
     }
 }

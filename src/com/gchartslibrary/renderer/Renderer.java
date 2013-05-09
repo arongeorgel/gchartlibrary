@@ -67,7 +67,7 @@ public class Renderer {
 
     public Renderer() {
         mChartTitle = "";
-        mChartTitleTextSize = 15;
+        mChartTitleTextSize = 35;
         mChartTitleTextColor = Color.WHITE;
         mChartTitleTextMaxWidth = -1;
         mTextTypefaceName = REGULAR_TEXT_FONT.toString();

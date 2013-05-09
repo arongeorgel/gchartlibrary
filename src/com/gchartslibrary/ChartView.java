@@ -18,12 +18,15 @@ package com.gchartslibrary;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.gchartslibrary.chart.Chart;
+import com.gchartslibrary.model.DatasetSelection;
+import com.gchartslibrary.model.LabelsSelection;
 
 /**
  * The view holder where the chart will be drown
@@ -36,13 +39,11 @@ public class ChartView extends View {
     private Rect mRect;
     private Handler mHandler;
     private Paint mPaint;
-    /** The touch handler. */
-    // private ITouchHandler mTouchHandler;
     private float mOldX;
     private float mOldY;
 
-    // private int mOffsetX = 0;
-    // private int mOffsetY = 0;
+    private int mOffsetX = 0;
+    private int mOffsetY = 0;
 
     /**
      * Use constructor <code>ChartView(context, chart)</code>
@@ -57,6 +58,11 @@ public class ChartView extends View {
         mRect = new Rect();
         mPaint = new Paint();
         mChart = chart;
+        mHandler = new Handler();
+    }
+
+    public Chart getChart() {
+        return mChart;
     }
 
     /**
@@ -82,6 +88,7 @@ public class ChartView extends View {
         super.onDraw(canvas);
         int top = mRect.top;
         int left = mRect.left;
+
         int width = getMeasuredWidth();
         int height = getMeasuredHeight();
         mChart.draw(canvas, left, top, width, height, mPaint);
@@ -94,6 +101,19 @@ public class ChartView extends View {
             mOldY = event.getY();
         }
         return super.onTouchEvent(event);
+    }
+
+    /**
+     * Returns the current series selection object.
+     * 
+     * @return the series selection
+     */
+    public DatasetSelection getCurrentSeriesAndPoint() {
+        return mChart.getDatasetForScreenCoordinate(new Point((int) mOldX, (int) mOldY), new Point(mOffsetX, mOffsetY));
+    }
+
+    public LabelsSelection getCurrentLabelAndPoint() {
+        return null;
     }
 
     /**
